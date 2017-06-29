@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+<!--
+vue对象的生命周期
+1. 初始化显示
+  * new vue()
+  * beforeCreate()
+  * created() : 在此启动异步任务(ajax请求, 定时器)
+  * beforeCompiled()
+  * compiled()
+  * beforeMount()
+  * mounted()
+2. 更新
+  * beforeUpdate()
+  * updated()
+3. 销毁vue实例: vm.$destory()
+  * beforeDestory(): 在此做一些收尾的工作: 如清理定时器
+  * destoryed()
+-->
+<!--初始化动态显示数据: 编译-->
+<div id="app">
+  <p v-show="isShow">{{msg}}</p>
+
+  <button @click="kill">干掉</button>
+</div>
+
+<script type="text/javascript" src="../js/vue.js"></script>
+<script type="text/javascript">
+    new Vue({
+        el : '#app',
+        data : {
+            msg: 'atguigu',
+            isShow: true
+        },
+        //初始化显示
+        beforeCreate() {
+            console.log('beforeCreate() '+this.msg)
+        },
+        created() {
+            console.log('created() '+this.msg)
+            // 启动循环定时器
+            this.intervalId = setInterval(() => { // 必须是箭头函数
+                console.log('定时器执行...')
+                this.isShow = !this.isShow
+            }, 2000)
+        },
+        beforeMount() {
+            console.log('beforeMount()')
+        },
+        mounted() {
+            console.log('mounted()')
+        },
+
+        // 更新
+        beforeUpdate() {
+            console.log('beforeUpdate()')
+        },
+        updated() {
+            console.log('updated()')
+        },
+
+        // 死亡
+        beforeDestroy() {
+            console.log('beforeDestroy()')
+            // 做一些清理的工作: 关闭定时器
+            clearInterval(this.intervalId)
+        },
+        destroyed() {
+            console.log('destroyed()')
+        },
+
+        methods: {
+            kill () {
+                this.$destroy()
+            }
+        }
+
+    })
+</script>
+</body>
+</html>

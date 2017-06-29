@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>15_动画</title>
+  <style>
+    p {
+      display: inline-block;/*必须切换行内块，否则滚动条*/
+    }
+    .fade-enter-active {
+       animation: bounce-in 2s;
+    }
+    .fade-leave-active {
+      animation: bounce-out 2s;
+    }
+    @keyframes bounce-in {
+      0% {
+        transform: scale(0);
+      }
+      50% {
+        transform: scale(1.5);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+    @keyframes bounce-out {
+      0% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.5);
+      }
+      100% {
+        transform: scale(0);
+      }
+    }
+  </style>
+</head>
+<body>
+<!--
+fade-enter-active: 进入的过程, 指定进入的transition
+fade-leave-active: 离开的过程, 指定离开的transition
+fade-enter: 进入前的状态: 指定隐藏时的样式
+fade-leave-to: 离开后的状态: 指定隐藏时的样式
+本质上切换的是class属性
+
+-->
+<div id="app">
+  <button @click="isShow=!isShow">切换</button>
+  <br>
+  <transition name="fade">
+    <p v-show="isShow">变变变</p>
+  </transition>
+</div>
+<script type="text/javascript" src="../js/vue.js"></script>
+<script type="text/javascript">
+    var vm = new Vue({
+        el:'#app',
+        data:{
+            isShow: true
+        }
+    })
+</script>
+</body>
+</html>
